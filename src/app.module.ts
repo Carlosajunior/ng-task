@@ -8,6 +8,7 @@ import { envSchema, EnvModule, EnvService } from '@/config/env';
 import { InfrastructureModule } from '@/modules/infrastructure/config';
 import { AuthModule } from '@/modules/auth/config';
 import { UsersModule } from '@/modules/users/config';
+import { ContentsModule } from '@/modules/contents/config';
 import { JwtAuthGuard } from '@/modules/auth/guards';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -50,6 +51,7 @@ import { AppService } from './app.service';
     InfrastructureModule,
     AuthModule,
     UsersModule,
+    ContentsModule,
   ],
   controllers: [AppController],
   providers: [
