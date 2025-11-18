@@ -1,10 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { User } from '@/modules/users/entities/user.entity';
 
-/**
- * Decorator to get current authenticated user from request
- * Usage: @CurrentUser() user: User
- */
 export const CurrentUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): User => {
     const request = ctx.switchToHttp().getRequest();
