@@ -3,9 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 
-/**
- * Repository for User entity operations
- */
 @Injectable()
 export class UsersRepository {
   constructor(
@@ -13,22 +10,11 @@ export class UsersRepository {
     private readonly repository: Repository<User>,
   ) {}
 
-  /**
-   * Create a new user
-   * @param userData - User data
-   * @returns Created user
-   */
   async create(userData: Partial<User>): Promise<User> {
     const user = this.repository.create(userData);
     return this.repository.save(user);
   }
 
-  /**
-   * Find user by email
-   * @param email - User email
-   * @param includePassword - Include password in result
-   * @returns User or null
-   */
   async findByEmail(
     email: string,
     includePassword = false,
@@ -44,38 +30,22 @@ export class UsersRepository {
     return query.getOne();
   }
 
-  /**
-   * Find user by username
-   * @param username - Username
-   * @returns User or null
-   */
-  async findByUsername(username: string): Promise<User | null> {
-    return this.repository.findOne({ where: { username } });
-  }
-
-  /**
-   * Find user by ID
-   * @param userId - User ID
-   * @returns User or null
-   */
   async findById(userId: string): Promise<User | null> {
-    return this.repository.findOne({ where: { user_id: userId } });
+    return this.repository.findOne({ where: { id: userId } });
   }
 
-  /**
-   * Update last login timestamp
-   * @param userId - User ID
-   */
-  async updateLastLogin(userId: string): Promise<void> {
-    await this.repository.update(userId, { last_login: new Date() });
+  async update(userId: string, data: Partial<User>): Promise<User> {
+    await this.repository.update(userId, data);
+    return this.findById(userId);
   }
 
-  /**
-   * Increment rating count
-   * @param userId - User ID
-   */
-  async incrementRatingCount(userId: string): Promise<void> {
-    await this.repository.increment({ user_id: userId }, 'rating_count', 1);
+  async delete(userId: string): Promise<void> {
+    await this.repository.delete(userId);
+  }
+
+  async exists(userId: string): Promise<boolean> {
+    const count = await this.repository.count({ where: { id: userId } });
+    return count > 0;
   }
 }
 
