@@ -22,9 +22,9 @@ import {
   DeleteUserService,
 } from '../services';
 import { CreateUserDTO, UpdateUserDTO, UserResponseDTO } from '../dtos';
+import { Public } from '@/common/decorators';
 
 @ApiTags('Users')
-@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(
@@ -33,10 +33,12 @@ export class UsersController {
     private readonly deleteUserService: DeleteUserService,
   ) {}
 
+  @Public()
   @Post()
   @ApiOperation({
     summary: 'Create a new user',
-    description: 'Creates a new user with hashed password',
+    description:
+      'Creates a new user with hashed password and returns authentication tokens',
   })
   @ApiResponse({
     status: 201,
@@ -51,10 +53,12 @@ export class UsersController {
     return this.createUserService.execute(createUserDto);
   }
 
+  @ApiBearerAuth()
   @Patch(':id')
   @ApiOperation({
     summary: 'Update user',
-    description: 'Updates user information. Password will be hashed if provided',
+    description:
+      'Updates user information. Password will be hashed if provided',
   })
   @ApiParam({
     name: 'id',
@@ -104,4 +108,3 @@ export class UsersController {
     return this.deleteUserService.execute(id);
   }
 }
-

@@ -1,13 +1,12 @@
 import {
   Injectable,
-  ConflictException,
   UnauthorizedException,
   BadRequestException,
 } from '@nestjs/common';
 import { UsersRepository } from '@/modules/users/repositories';
 import { PasswordService } from './password.service';
 import { JwtTokenService } from './jwt.service';
-import { RegisterDTO, LoginDTO, AuthResponseDTO } from '../dtos';
+import { LoginDTO, AuthResponseDTO } from '../dtos';
 import { EnvService } from '@/config/env';
 
 @Injectable()
@@ -18,27 +17,6 @@ export class AuthService {
     private readonly jwtTokenService: JwtTokenService,
     private readonly envService: EnvService,
   ) {}
-
-  async register(registerDto: RegisterDTO): Promise<AuthResponseDTO> {
-    const existingEmail = await this.usersRepository.findByEmail(
-      registerDto.email,
-    );
-    if (existingEmail) {
-      throw new ConflictException('Email already registered');
-    }
-
-    const hashedPassword = await this.passwordService.hashPassword(
-      registerDto.password,
-    );
-
-    const user = await this.usersRepository.create({
-      email: registerDto.email,
-      password: hashedPassword,
-      fullName: registerDto.fullName,
-    });
-
-    return this.generateAuthResponse(user.id, user.email);
-  }
 
   async login(loginDto: LoginDTO): Promise<AuthResponseDTO> {
     const user = await this.usersRepository.findByEmail(loginDto.email, true);
@@ -80,10 +58,7 @@ export class AuthService {
     return this.usersRepository.findById(userId);
   }
 
-  private generateAuthResponse(
-    userId: string,
-    email: string,
-  ): AuthResponseDTO {
+  generateAuthResponse(userId: string, email: string): AuthResponseDTO {
     const accessToken = this.jwtTokenService.generateAccessToken(
       userId,
       email,

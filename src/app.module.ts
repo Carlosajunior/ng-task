@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
 import { join } from 'path';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { envSchema, EnvModule, EnvService } from '@/config/env';
 import { InfrastructureModule } from '@/modules/infrastructure/config';
+import { AuthModule } from '@/modules/auth/config';
+import { UsersModule } from '@/modules/users/config';
+import { JwtAuthGuard } from '@/modules/auth/guards';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -39,11 +44,20 @@ import { AppService } from './app.service';
         ],
         migrationsTableName: 'typeorm_migrations',
         migrationsRun: false,
+        namingStrategy: new SnakeNamingStrategy(),
       }),
     }),
     InfrastructureModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
