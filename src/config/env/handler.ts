@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
 export const envSchema = z.object({
-  // Application
-  APP_NAME: z.string().default('BFF Service'),
-  APP_DESCRIPTION: z.string().default('Backend For Frontend'),
+  APP_NAME: z.string().default('NG Technical Assesment API'),
+  APP_DESCRIPTION: z
+    .string()
+    .default("API designed to attend NG's technical assessment."),
   APP_VERSION: z.string().default('1.0.0'),
   APP_PORT: z.coerce.number().int().positive().default(3000),
   SWAGGER_PATH: z.string().default('api'),
@@ -11,7 +12,6 @@ export const envSchema = z.object({
     .enum(['development', 'production', 'test'])
     .default('development'),
 
-  // Database
   POSTGRES_HOST: z.string(),
   POSTGRES_PORT: z.coerce.number().int().positive(),
   POSTGRES_DATABASE: z.string(),

@@ -2,11 +2,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { EnvService } from './env';
 
-/**
- * Configures Swagger documentation for the application
- * @param app - The Nest application instance
- * @param envService - Environment service for configuration
- */
 export function setupSwagger(
   app: INestApplication,
   envService: EnvService,

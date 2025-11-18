@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { join } from 'path';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -11,11 +12,10 @@ export const connectionSource = new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   logging: true,
-  entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-  migrations: [
-    join(__dirname, '..', 'database', 'migrations', '**/*{.ts,.js}'),
-  ],
+  entities: [join(__dirname, '../../modules/**/*.entity{.ts,.js}')],
+  migrations: [join(__dirname, 'migrations/**/*{.ts,.js}')],
   synchronize: false,
   migrationsTableName: 'typeorm_migrations',
   migrationsRun: false,
+  namingStrategy: new SnakeNamingStrategy(),
 });
