@@ -1,10 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { EnvService } from '@/config/env';
+import { setupSwagger } from '@/config/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Get environment service
+  const envService = app.get(EnvService);
+
+  // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -12,23 +18,21 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  // Enable CORS
   app.enableCors();
-  const config = new DocumentBuilder()
-    .setTitle('Codominium Management System ')
-    .setDescription('Back-end')
-    .setVersion('1.0')
-    .addSecurity('Auth', {
-      description: 'Bearer <JWT>',
-      name: 'Authorization',
-      bearerFormat: 'Bearer',
-      scheme: 'Bearer',
-      type: 'http',
-      in: 'Header',
-    })
-    .addSecurityRequirements('Auth')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+
+  // Setup Swagger documentation
+  setupSwagger(app, envService);
+
+  // Start application
+  const port = envService.get('APP_PORT');
+  await app.listen(port);
+
+  console.log(`Application is running on: http://localhost:${port}`);
+  console.log(
+    `Swagger documentation: http://localhost:${port}/${envService.get('SWAGGER_PATH')}`,
+  );
 }
+
 bootstrap();
