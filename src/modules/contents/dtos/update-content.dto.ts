@@ -6,7 +6,7 @@ import {
   IsOptional,
   MaxLength,
 } from 'class-validator';
-import { ContentType } from '../entities/content.entity';
+import { ContentCategory } from '../entities/content.entity';
 
 export class UpdateContentDTO {
   @ApiPropertyOptional({
@@ -32,14 +32,14 @@ export class UpdateContentDTO {
   description?: string;
 
   @ApiPropertyOptional({
-    title: 'type',
-    description: 'Type of content',
-    enum: ContentType,
-    example: ContentType.GAME,
+    title: 'category',
+    description: 'Content category',
+    enum: ContentCategory,
+    example: ContentCategory.GAME,
   })
-  @IsEnum(ContentType)
+  @IsEnum(ContentCategory)
   @IsOptional()
-  type?: ContentType;
+  category?: ContentCategory;
 
   @ApiPropertyOptional({
     title: 'coverUrl',

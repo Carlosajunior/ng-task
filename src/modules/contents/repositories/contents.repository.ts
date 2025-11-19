@@ -21,15 +21,15 @@ export class ContentsRepository {
   }
 
   async findAll(queryDto: QueryContentsDTO): Promise<[Content[], number]> {
-    const { page, limit, search, type, minRating, createdBy, sortBy, order } =
+    const { page, limit, search, category, minRating, createdBy, sortBy, order } =
       queryDto;
 
     const skip = (page - 1) * limit;
 
     const queryBuilder = this.repository.createQueryBuilder('content');
 
-    if (type) {
-      queryBuilder.andWhere('content.type = :type', { type });
+    if (category) {
+      queryBuilder.andWhere('content.category = :category', { category });
     }
 
     if (minRating !== undefined) {

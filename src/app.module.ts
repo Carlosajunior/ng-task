@@ -9,6 +9,7 @@ import { InfrastructureModule } from '@/modules/infrastructure/config';
 import { AuthModule } from '@/modules/auth/config';
 import { UsersModule } from '@/modules/users/config';
 import { ContentsModule } from '@/modules/contents/config';
+import { RatingsModule } from '@/modules/ratings/config';
 import { JwtAuthGuard } from '@/modules/auth/guards';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -52,6 +53,7 @@ import { AppService } from './app.service';
     AuthModule,
     UsersModule,
     ContentsModule,
+    RatingsModule,
   ],
   controllers: [AppController],
   providers: [
