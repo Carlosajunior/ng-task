@@ -25,6 +25,16 @@ export class UpdateUserService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
+    if (updateUserDto.username && updateUserDto.username !== user.username) {
+      const existingUser = await this.usersRepository.findByUsername(
+        updateUserDto.username,
+      );
+
+      if (existingUser) {
+        throw new ConflictException('Username already taken');
+      }
+    }
+
     if (updateUserDto.email && updateUserDto.email !== user.email) {
       const existingUser = await this.usersRepository.findByEmail(
         updateUserDto.email,
@@ -50,4 +60,3 @@ export class UpdateUserService {
     });
   }
 }
-

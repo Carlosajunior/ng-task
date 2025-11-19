@@ -12,8 +12,7 @@ export class ListContentsService {
   constructor(private readonly contentsRepository: ContentsRepository) {}
 
   async execute(queryDto: QueryContentsDTO): Promise<PaginatedContentsDTO> {
-    const [contents, total] =
-      await this.contentsRepository.findAll(queryDto);
+    const [contents, total] = await this.contentsRepository.findAll(queryDto);
 
     const contentDtos = contents.map((content) =>
       plainToInstance(ContentResponseDTO, content),
@@ -27,4 +26,3 @@ export class ListContentsService {
     );
   }
 }
-

@@ -25,4 +25,3 @@ import { ContentsRepository } from '@/modules/contents/repositories';
   exports: [ContentsRepository],
 })
 export class ContentsModule {}
-

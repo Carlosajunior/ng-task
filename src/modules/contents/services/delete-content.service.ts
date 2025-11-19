@@ -25,4 +25,3 @@ export class DeleteContentService {
     await this.contentsRepository.delete(contentId);
   }
 }
-

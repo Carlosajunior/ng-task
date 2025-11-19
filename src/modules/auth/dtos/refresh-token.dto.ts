@@ -12,4 +12,3 @@ export class RefreshTokenDTO {
   @IsNotEmpty()
   refresh_token: string;
 }
-

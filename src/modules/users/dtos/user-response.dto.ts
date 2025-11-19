@@ -14,6 +14,15 @@ export class UserResponseDTO {
   id: string;
 
   @ApiProperty({
+    title: 'username',
+    description: 'Username (unique)',
+    type: String,
+    example: 'johndoe',
+  })
+  @Expose()
+  username: string;
+
+  @ApiProperty({
     title: 'email',
     description: 'User email address',
     type: String,
@@ -32,6 +41,26 @@ export class UserResponseDTO {
   })
   @Expose()
   fullName?: string;
+
+  @ApiProperty({
+    title: 'ratingCount',
+    description: 'Total number of ratings created by the user',
+    type: Number,
+    example: 10,
+  })
+  @Expose()
+  ratingCount: number;
+
+  @ApiPropertyOptional({
+    title: 'lastLogin',
+    description: 'Last login timestamp',
+    type: String,
+    format: 'date-time',
+    example: '2024-11-18T10:00:00.000Z',
+    nullable: true,
+  })
+  @Expose()
+  lastLogin?: Date;
 
   @ApiProperty({
     title: 'status',

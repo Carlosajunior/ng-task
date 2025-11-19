@@ -28,14 +28,10 @@ export class UpdateContentService {
       );
     }
 
-    const updatedContent = await this.contentsRepository.update(
-      contentId,
-      dto,
-    );
+    const updatedContent = await this.contentsRepository.update(contentId, dto);
 
     return plainToInstance(ContentResponseDTO, updatedContent, {
       excludeExtraneousValues: true,
     });
   }
 }
-

@@ -13,4 +13,3 @@ import { RatingsRepository } from '@/modules/ratings/repositories';
   exports: [RatingsRepository],
 })
 export class RatingsModule {}
-

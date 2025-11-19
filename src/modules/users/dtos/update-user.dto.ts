@@ -9,6 +9,18 @@ import {
 
 export class UpdateUserDTO {
   @ApiPropertyOptional({
+    title: 'username',
+    description: 'Username (unique, min 3 characters)',
+    type: String,
+    minLength: 3,
+    example: 'johndoe',
+  })
+  @IsString()
+  @IsOptional()
+  @MinLength(3)
+  username?: string;
+
+  @ApiPropertyOptional({
     title: 'email',
     description: 'User email address (unique)',
     type: String,

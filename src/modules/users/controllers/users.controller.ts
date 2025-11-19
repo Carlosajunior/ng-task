@@ -47,7 +47,7 @@ export class UsersController {
   })
   @ApiResponse({
     status: 409,
-    description: 'Email already registered',
+    description: 'Email or username already registered',
   })
   async create(@Body() createUserDto: CreateUserDTO): Promise<UserResponseDTO> {
     return this.createUserService.execute(createUserDto);
@@ -76,7 +76,7 @@ export class UsersController {
   })
   @ApiResponse({
     status: 409,
-    description: 'Email already registered',
+    description: 'Email or username already registered',
   })
   async update(
     @Param('id', ParseUUIDPipe) id: string,

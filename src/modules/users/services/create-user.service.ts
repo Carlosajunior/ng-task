@@ -12,12 +12,20 @@ export class CreateUserService {
   ) {}
 
   async execute(createUserDto: CreateUserDTO): Promise<UserResponseDTO> {
-    const existingUser = await this.usersRepository.findByEmail(
+    const existingUserByEmail = await this.usersRepository.findByEmail(
       createUserDto.email,
     );
 
-    if (existingUser) {
+    if (existingUserByEmail) {
       throw new ConflictException('Email already registered');
+    }
+
+    const existingUserByUsername = await this.usersRepository.findByUsername(
+      createUserDto.username,
+    );
+
+    if (existingUserByUsername) {
+      throw new ConflictException('Username already taken');
     }
 
     const hashedPassword = await this.passwordService.hashPassword(

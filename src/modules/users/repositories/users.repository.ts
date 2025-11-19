@@ -30,6 +30,21 @@ export class UsersRepository {
     return await query.getOne();
   }
 
+  async findByUsername(
+    username: string,
+    includePassword = false,
+  ): Promise<User | null> {
+    const query = await this.repository
+      .createQueryBuilder('user')
+      .where('user.username = :username', { username });
+
+    if (includePassword) {
+      query.addSelect('user.password');
+    }
+
+    return await query.getOne();
+  }
+
   async findByEmailOrUsername(
     login: string,
     includePassword = false,

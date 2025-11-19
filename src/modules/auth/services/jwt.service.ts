@@ -1,14 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService as NestJwtService } from '@nestjs/jwt';
 import { EnvService } from '@/config/env';
-
-export interface JwtPayload {
-  sub: string;
-  email: string;
-  type: 'access' | 'refresh';
-  iat?: number;
-  exp?: number;
-}
+import { JwtPayload } from '@/modules/auth/interfaces';
 
 @Injectable()
 export class JwtTokenService {

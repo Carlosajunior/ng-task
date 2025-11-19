@@ -66,10 +66,7 @@ export class AuthService {
   }
 
   generateAuthResponse(userId: string, email: string): AuthResponseDTO {
-    const accessToken = this.jwtTokenService.generateAccessToken(
-      userId,
-      email,
-    );
+    const accessToken = this.jwtTokenService.generateAccessToken(userId, email);
     const refreshToken = this.jwtTokenService.generateRefreshToken(
       userId,
       email,
@@ -87,4 +84,3 @@ export class AuthService {
     };
   }
 }
-
