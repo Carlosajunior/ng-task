@@ -5,7 +5,7 @@ import {
   TableIndex,
   TableForeignKey,
 } from 'typeorm';
-import { ContentCategory } from '@/modules/contents/entities/content.entity';
+import { ContentCategory } from '@/modules/contents/enums/content-category.enum';
 
 export class CreateContentsTable1731744000000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

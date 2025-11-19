@@ -11,15 +11,15 @@ export class UsersRepository {
   ) {}
 
   async create(userData: Partial<User>): Promise<User> {
-    const user = this.repository.create(userData);
-    return this.repository.save(user);
+    const user = await this.repository.create(userData);
+    return await this.repository.save(user);
   }
 
   async findByEmail(
     email: string,
     includePassword = false,
   ): Promise<User | null> {
-    const query = this.repository
+    const query = await this.repository
       .createQueryBuilder('user')
       .where('user.email = :email', { email });
 
@@ -27,16 +27,32 @@ export class UsersRepository {
       query.addSelect('user.password');
     }
 
-    return query.getOne();
+    return await query.getOne();
+  }
+
+  async findByEmailOrUsername(
+    login: string,
+    includePassword = false,
+  ): Promise<User | null> {
+    const query = await this.repository
+      .createQueryBuilder('user')
+      .where('user.email = :login', { login })
+      .orWhere('user.username = :login', { login });
+
+    if (includePassword) {
+      query.addSelect('user.password');
+    }
+
+    return await query.getOne();
   }
 
   async findById(userId: string): Promise<User | null> {
-    return this.repository.findOne({ where: { id: userId } });
+    return await this.repository.findOne({ where: { id: userId } });
   }
 
   async update(userId: string, data: Partial<User>): Promise<User> {
     await this.repository.update(userId, data);
-    return this.findById(userId);
+    return await this.findById(userId);
   }
 
   async delete(userId: string): Promise<void> {
@@ -48,4 +64,3 @@ export class UsersRepository {
     return count > 0;
   }
 }
-

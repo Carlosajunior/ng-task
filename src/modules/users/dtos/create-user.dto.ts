@@ -10,6 +10,17 @@ import {
 
 export class CreateUserDTO {
   @ApiProperty({
+    title: 'username',
+    description: 'Username (unique)',
+    type: String,
+    example: 'johndoe',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
+  username: string;
+
+  @ApiProperty({
     title: 'email',
     description: 'User email address (unique)',
     type: String,
@@ -49,4 +60,3 @@ export class CreateUserDTO {
   @IsOptional()
   fullName?: string;
 }
-

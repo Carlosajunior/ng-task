@@ -19,7 +19,10 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDTO): Promise<AuthResponseDTO> {
-    const user = await this.usersRepository.findByEmail(loginDto.email, true);
+    const user = await this.usersRepository.findByEmailOrUsername(
+      loginDto.login,
+      true,
+    );
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -31,6 +34,10 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
+
+    await this.usersRepository.update(user.id, {
+      lastLogin: new Date(),
+    });
 
     return this.generateAuthResponse(user.id, user.email);
   }
@@ -73,14 +80,10 @@ export class AuthService {
     );
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      token_type: 'Bearer',
-      expires_in: expiresIn,
-      user: {
-        id: userId,
-        email,
-      },
+      accessToken,
+      refreshToken,
+      tokenType: 'Bearer',
+      expiresIn,
     };
   }
 }

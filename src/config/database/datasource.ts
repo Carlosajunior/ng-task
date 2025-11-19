@@ -4,6 +4,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('tsconfig-paths/register');
+
 export const connectionSource = new DataSource({
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
