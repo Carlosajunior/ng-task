@@ -23,6 +23,7 @@
     "migration:generate": "npm run typeorm migration:generate -- -d ./src/config/database/datasource.ts ./src/config/database/migrations/auto",
     "migration:run": "npm run typeorm migration:run -- -d ./src/config/database/datasource.ts",
     "migration:revert": "npm run typeorm migration:revert -- -d ./src/config/database/datasource.ts",
+    "seed": "ts-node -r tsconfig-paths/register src/config/database/seed.ts",
     "nest:generate": "nest generate resource"
   },
   "dependencies": {
