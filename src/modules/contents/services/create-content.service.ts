@@ -17,8 +17,6 @@ export class CreateContentService {
       status: true,
     });
 
-    return plainToInstance(ContentResponseDTO, content, {
-      excludeExtraneousValues: true,
-    });
+    return plainToInstance(ContentResponseDTO, content);
   }
 }

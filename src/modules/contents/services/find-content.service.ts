@@ -14,8 +14,6 @@ export class FindContentService {
       throw new NotFoundException(`Content with ID ${contentId} not found`);
     }
 
-    return plainToInstance(ContentResponseDTO, content, {
-      excludeExtraneousValues: true,
-    });
+    return plainToInstance(ContentResponseDTO, content);
   }
 }
