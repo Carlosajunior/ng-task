@@ -30,8 +30,6 @@ export class UpdateContentService {
 
     const updatedContent = await this.contentsRepository.update(contentId, dto);
 
-    return plainToInstance(ContentResponseDTO, updatedContent, {
-      excludeExtraneousValues: true,
-    });
+    return plainToInstance(ContentResponseDTO, updatedContent);
   }
 }
