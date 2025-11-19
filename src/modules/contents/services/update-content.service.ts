@@ -3,8 +3,8 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { ContentsRepository } from '../repositories';
-import { UpdateContentDTO, ContentResponseDTO } from '../dtos';
+import { ContentsRepository } from '@/modules/contents/repositories';
+import { UpdateContentDTO, ContentResponseDTO } from '@/modules/contents/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

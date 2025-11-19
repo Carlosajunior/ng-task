@@ -1,13 +1,13 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../entities/user.entity';
-import { UsersRepository } from '../repositories';
+import { User } from '@/modules/users/entities';
+import { UsersRepository } from '@/modules/users/repositories';
 import {
   CreateUserService,
   UpdateUserService,
   DeleteUserService,
-} from '../services';
-import { UsersController } from '../controllers';
+} from '@/modules/users/services';
+import { UsersController } from '@/modules/users/controllers';
 import { AuthModule } from '@/modules/auth/config';
 
 @Module({

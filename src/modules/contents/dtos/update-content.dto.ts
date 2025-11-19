@@ -6,7 +6,7 @@ import {
   IsOptional,
   MaxLength,
 } from 'class-validator';
-import { ContentCategory } from '../enums/content-category.enum';
+import { ContentCategory } from '@/modules/contents/enums';
 
 export class UpdateContentDTO {
   @ApiPropertyOptional({

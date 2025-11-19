@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { ContentsRepository } from '../repositories';
-import { CreateContentDTO, ContentResponseDTO } from '../dtos';
+import { ContentsRepository } from '@/modules/contents/repositories';
+import { CreateContentDTO, ContentResponseDTO } from '@/modules/contents/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

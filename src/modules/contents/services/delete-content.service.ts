@@ -3,7 +3,7 @@ import {
   NotFoundException,
   ForbiddenException,
 } from '@nestjs/common';
-import { ContentsRepository } from '../repositories';
+import { ContentsRepository } from '@/modules/contents/repositories';
 
 @Injectable()
 export class DeleteContentService {

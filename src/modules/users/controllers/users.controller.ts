@@ -20,8 +20,8 @@ import {
   CreateUserService,
   UpdateUserService,
   DeleteUserService,
-} from '../services';
-import { CreateUserDTO, UpdateUserDTO, UserResponseDTO } from '../dtos';
+} from '@/modules/users/services';
+import { CreateUserDTO, UpdateUserDTO, UserResponseDTO } from '@/modules/users/dtos';
 import { Public } from '@/common/decorators';
 
 @ApiTags('Users')

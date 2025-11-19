@@ -5,11 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import { Rating } from '../entities/rating.entity';
-import { Content } from '@/modules/contents/entities/content.entity';
-import { User } from '@/modules/users/entities/user.entity';
-import { CreateRatingDTO } from '../dtos/create-rating.dto';
-import { RatingResponseDTO } from '../dtos/rating-response.dto';
+import { Rating } from '@/modules/ratings/entities';
+import { Content } from '@/modules/contents/entities';
+import { User } from '@/modules/users/entities';
+import { CreateRatingDTO, RatingResponseDTO } from '@/modules/ratings/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

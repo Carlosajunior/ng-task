@@ -7,9 +7,9 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { BaseEntity } from '@/common/entities';
-import { User } from '@/modules/users/entities/user.entity';
-import { Rating } from '@/modules/ratings/entities/rating.entity';
-import { ContentCategory } from '../enums/content-category.enum';
+import { User } from '@/modules/users/entities';
+import { Rating } from '@/modules/ratings/entities';
+import { ContentCategory } from '@/modules/contents/enums';
 
 @Entity('contents')
 @Index(['title'])

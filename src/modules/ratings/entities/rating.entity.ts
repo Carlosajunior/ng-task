@@ -8,8 +8,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '@/modules/users/entities/user.entity';
-import { Content } from '@/modules/contents/entities/content.entity';
+import { User } from '@/modules/users/entities';
+import { Content } from '@/modules/contents/entities';
 
 @Entity('ratings')
 @Index(['userId', 'contentId'], { unique: true })

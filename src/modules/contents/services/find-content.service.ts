@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ContentsRepository } from '../repositories';
-import { ContentResponseDTO } from '../dtos';
+import { ContentsRepository } from '@/modules/contents/repositories';
+import { ContentResponseDTO } from '@/modules/contents/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

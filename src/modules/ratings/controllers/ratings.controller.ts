@@ -12,8 +12,8 @@ import {
   ApiBearerAuth,
   ApiParam,
 } from '@nestjs/swagger';
-import { RateContentService } from '../services';
-import { CreateRatingDTO, RatingResponseDTO } from '../dtos';
+import { RateContentService } from '@/modules/ratings/services';
+import { CreateRatingDTO, RatingResponseDTO } from '@/modules/ratings/dtos';
 import { CurrentUser } from '@/common/decorators';
 
 @ApiTags('Ratings')

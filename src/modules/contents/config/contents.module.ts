@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Content } from '../entities';
-import { ContentsController } from '../controllers';
+import { Content } from '@/modules/contents/entities';
+import { ContentsController } from '@/modules/contents/controllers';
 import {
   CreateContentService,
   FindContentService,
   ListContentsService,
   UpdateContentService,
   DeleteContentService,
-} from '../services';
-import { ContentsRepository } from '../repositories';
+} from '@/modules/contents/services';
+import { ContentsRepository } from '@/modules/contents/repositories';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Content])],

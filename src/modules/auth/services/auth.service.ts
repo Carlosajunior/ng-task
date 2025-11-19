@@ -4,9 +4,9 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { UsersRepository } from '@/modules/users/repositories';
-import { PasswordService } from './password.service';
-import { JwtTokenService } from './jwt.service';
-import { LoginDTO, AuthResponseDTO } from '../dtos';
+import { PasswordService } from '@/modules/auth/services';
+import { JwtTokenService } from '@/modules/auth/services';
+import { LoginDTO, AuthResponseDTO } from '@/modules/auth/dtos';
 import { EnvService } from '@/config/env';
 
 @Injectable()

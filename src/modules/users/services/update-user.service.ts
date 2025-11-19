@@ -3,9 +3,9 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { UsersRepository } from '../repositories';
+import { UsersRepository } from '@/modules/users/repositories';
 import { PasswordService } from '@/modules/auth/services';
-import { UpdateUserDTO, UserResponseDTO } from '../dtos';
+import { UpdateUserDTO, UserResponseDTO } from '@/modules/users/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

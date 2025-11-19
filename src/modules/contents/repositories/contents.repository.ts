@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Content } from '../entities/content.entity';
-import { QueryContentsDTO } from '../dtos';
+import { Content } from '@/modules/contents/entities';
+import { QueryContentsDTO } from '@/modules/contents/dtos';
 
 @Injectable()
 export class ContentsRepository {

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { ContentCategory } from '../enums/content-category.enum';
+import { ContentCategory } from '@/modules/contents/enums';
 
 export class RatingSummary {
   @ApiProperty({ type: String, format: 'uuid' })
@@ -92,7 +92,7 @@ export class ContentResponseDTO {
   @ApiProperty({
     title: 'ratings',
     description: 'Content ratings',
-    type: [RatingSummary],
+    type: RatingSummary,
     isArray: true,
     example: [
       {

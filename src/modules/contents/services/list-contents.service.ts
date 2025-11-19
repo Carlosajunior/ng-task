@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ContentsRepository } from '../repositories';
+import { ContentsRepository } from '@/modules/contents/repositories';
 import {
   QueryContentsDTO,
   PaginatedContentsDTO,
   ContentResponseDTO,
-} from '../dtos';
+} from '@/modules/contents/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

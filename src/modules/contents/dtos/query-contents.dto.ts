@@ -10,13 +10,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { SortOrder } from '@/common/enums';
-import { ContentCategory } from '../enums/content-category.enum';
-
-export enum ContentSortBy {
-  CREATED_AT = 'createdAt',
-  UPDATED_AT = 'updatedAt',
-  TITLE = 'title',
-}
+import { ContentCategory, ContentSortBy } from '@/modules/contents/enums';
 
 export class QueryContentsDTO {
   @ApiPropertyOptional({

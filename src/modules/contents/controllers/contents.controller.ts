@@ -24,14 +24,14 @@ import {
   ListContentsService,
   UpdateContentService,
   DeleteContentService,
-} from '../services';
+} from '@/modules/contents/services';
 import {
   CreateContentDTO,
   UpdateContentDTO,
   ContentResponseDTO,
   QueryContentsDTO,
   PaginatedContentsDTO,
-} from '../dtos';
+} from '@/modules/contents/dtos';
 import { Public, CurrentUser } from '@/common/decorators';
 
 @ApiTags('Contents')

@@ -1,7 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { UsersRepository } from '../repositories';
+import { UsersRepository } from '@/modules/users/repositories';
 import { PasswordService } from '@/modules/auth/services';
-import { CreateUserDTO, UserResponseDTO } from '../dtos';
+import { CreateUserDTO, UserResponseDTO } from '@/modules/users/dtos';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
