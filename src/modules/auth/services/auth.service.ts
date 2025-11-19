@@ -69,7 +69,7 @@ export class AuthService {
     );
 
     const expiresIn = this.jwtTokenService.getExpirationTime(
-      this.envService.get('JWT_ACCESS_TOKEN_EXPIRATION'),
+      this.envService.get('JWT_ACCESS_TOKEN_EXPIRATION') as string,
     );
 
     return {
