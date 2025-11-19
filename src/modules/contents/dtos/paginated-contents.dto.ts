@@ -1,38 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { PaginatedResponseDTO } from '@/common/dtos';
 import { ContentResponseDTO } from './content-response.dto';
 
-export class PaginatedContentsDTO {
+export class PaginatedContentsDTO extends PaginatedResponseDTO<ContentResponseDTO> {
   @ApiProperty({
     title: 'data',
     description: 'List of contents',
-    type: [ContentResponseDTO],
+    isArray: true,
+    type: ContentResponseDTO,
   })
   data: ContentResponseDTO[];
-
-  @ApiProperty({
-    title: 'meta',
-    description: 'Pagination metadata',
-  })
-  meta: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-
-  constructor(
-    data: ContentResponseDTO[],
-    page: number,
-    limit: number,
-    total: number,
-  ) {
-    this.data = data;
-    this.meta = {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    };
-  }
 }
-

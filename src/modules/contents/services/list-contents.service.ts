@@ -16,9 +16,7 @@ export class ListContentsService {
       await this.contentsRepository.findAll(queryDto);
 
     const contentDtos = contents.map((content) =>
-      plainToInstance(ContentResponseDTO, content, {
-        excludeExtraneousValues: true,
-      }),
+      plainToInstance(ContentResponseDTO, content),
     );
 
     return new PaginatedContentsDTO(

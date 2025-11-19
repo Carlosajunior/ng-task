@@ -32,12 +32,16 @@ export class RatingsController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Rating created/updated successfully',
+    description: 'Rating created successfully',
     type: RatingResponseDTO,
   })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Content not found' })
+  @ApiResponse({
+    status: 409,
+    description: 'User has already rated this content',
+  })
   async rateContent(
     @Param('contentId', ParseUUIDPipe) contentId: string,
     @Body() createRatingDto: CreateRatingDTO,

@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import { RatingsRepository } from '../repositories/ratings.repository';
+import { Rating } from '../entities/rating.entity';
 import { Content } from '@/modules/contents/entities/content.entity';
+import { User } from '@/modules/users/entities/user.entity';
 import { CreateRatingDTO } from '../dtos/create-rating.dto';
 import { RatingResponseDTO } from '../dtos/rating-response.dto';
 import { plainToInstance } from 'class-transformer';
@@ -10,7 +15,8 @@ import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class RateContentService {
   constructor(
-    private readonly ratingsRepository: RatingsRepository,
+    @InjectRepository(Rating)
+    private readonly ratingRepository: Repository<Rating>,
     @InjectRepository(Content)
     private readonly contentRepository: Repository<Content>,
     private readonly dataSource: DataSource,
@@ -21,7 +27,6 @@ export class RateContentService {
     userId: string,
     dto: CreateRatingDTO,
   ): Promise<RatingResponseDTO> {
-    // Verificar se o conteúdo existe
     const content = await this.contentRepository.findOne({
       where: { id: contentId },
     });
@@ -31,38 +36,29 @@ export class RateContentService {
     }
 
     return await this.dataSource.transaction(async (manager) => {
-      const ratingsRepo = manager.withRepository(this.ratingsRepository);
-      const contentsRepo = manager.getRepository(Content);
+      const ratingsRepo = manager.getRepository(Rating);
+      const usersRepo = manager.getRepository(User);
 
-      // Buscar rating existente
-      let rating = await ratingsRepo.findByUserAndContent(userId, contentId);
+      const existingRating = await ratingsRepo.findOne({
+        where: { userId, contentId },
+      });
 
-      if (rating) {
-        // Atualizar rating existente
-        rating.rating = dto.rating;
-        rating.comment = dto.comment;
-      } else {
-        // Criar novo rating
-        rating = ratingsRepo.create({
-          userId,
-          contentId,
-          rating: dto.rating,
-          comment: dto.comment,
-        });
+      if (existingRating) {
+        throw new ConflictException(
+          'You have already rated this content. Each user can only rate a content once.',
+        );
       }
+
+      const rating = ratingsRepo.create({
+        userId,
+        contentId,
+        rating: dto.rating,
+        comment: dto.comment,
+      });
 
       await ratingsRepo.save(rating);
 
-      // Recalcular média e contagem
-      const { average, count } = await ratingsRepo.calculateAverageRating(
-        contentId,
-      );
-
-      // Atualizar conteúdo
-      await contentsRepo.update(contentId, {
-        averageRating: parseFloat(average.toFixed(2)),
-        ratingCount: count,
-      });
+      await usersRepo.increment({ id: userId }, 'ratingCount', 1);
 
       return plainToInstance(RatingResponseDTO, rating, {
         excludeExtraneousValues: true,
@@ -70,4 +66,3 @@ export class RateContentService {
     });
   }
 }
-

@@ -1,8 +1,24 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Exclude, Expose } from 'class-transformer';
-import { ContentCategory } from '../entities/content.entity';
+import { Type } from 'class-transformer';
+import { ContentCategory } from '../enums/content-category.enum';
 
-@Exclude()
+export class RatingSummary {
+  @ApiProperty({ type: String, format: 'uuid' })
+  userId: string;
+
+  @ApiProperty({ type: Number, minimum: 1, maximum: 5 })
+  rating: number;
+
+  @ApiPropertyOptional({ type: String, nullable: true })
+  comment?: string;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  createdAt: Date;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  updatedAt: Date;
+}
+
 export class ContentResponseDTO {
   @ApiProperty({
     title: 'id',
@@ -11,7 +27,6 @@ export class ContentResponseDTO {
     format: 'uuid',
     example: '550e8400-e29b-41d4-a716-446655440000',
   })
-  @Expose()
   id: string;
 
   @ApiProperty({
@@ -20,7 +35,6 @@ export class ContentResponseDTO {
     type: String,
     example: 'The Last of Us',
   })
-  @Expose()
   title: string;
 
   @ApiPropertyOptional({
@@ -30,7 +44,6 @@ export class ContentResponseDTO {
     example: 'An action-adventure game...',
     nullable: true,
   })
-  @Expose()
   description?: string;
 
   @ApiProperty({
@@ -39,18 +52,16 @@ export class ContentResponseDTO {
     enum: ContentCategory,
     example: ContentCategory.GAME,
   })
-  @Expose()
   category: ContentCategory;
 
   @ApiPropertyOptional({
-    title: 'coverUrl',
-    description: 'URL to cover image',
+    title: 'thumbnailUrl',
+    description: 'URL to thumbnail image',
     type: String,
     example: 'https://example.com/cover.jpg',
     nullable: true,
   })
-  @Expose()
-  coverUrl?: string;
+  thumbnailUrl?: string;
 
   @ApiPropertyOptional({
     title: 'contentUrl',
@@ -59,7 +70,6 @@ export class ContentResponseDTO {
     example: 'https://example.com/content',
     nullable: true,
   })
-  @Expose()
   contentUrl?: string;
 
   @ApiPropertyOptional({
@@ -69,26 +79,7 @@ export class ContentResponseDTO {
     example: 'Naughty Dog',
     nullable: true,
   })
-  @Expose()
   author?: string;
-
-  @ApiProperty({
-    title: 'ratingCount',
-    description: 'Number of ratings',
-    type: Number,
-    example: 150,
-  })
-  @Expose()
-  ratingCount: number;
-
-  @ApiProperty({
-    title: 'averageRating',
-    description: 'Average rating',
-    type: Number,
-    example: 4.5,
-  })
-  @Expose()
-  averageRating: number;
 
   @ApiProperty({
     title: 'createdBy',
@@ -96,8 +87,24 @@ export class ContentResponseDTO {
     type: String,
     format: 'uuid',
   })
-  @Expose()
   createdBy: string;
+
+  @ApiProperty({
+    title: 'ratings',
+    description: 'Content ratings',
+    type: [RatingSummary],
+    isArray: true,
+    example: [
+      {
+        userId: '550e8400-e29b-41d4-a716-446655440000',
+        rating: 5,
+        comment: 'Amazing!',
+        createdAt: '2024-11-18T10:00:00.000Z',
+      },
+    ],
+  })
+  @Type(() => RatingSummary)
+  ratings: RatingSummary[];
 
   @ApiProperty({
     title: 'status',
@@ -105,7 +112,6 @@ export class ContentResponseDTO {
     type: Boolean,
     example: true,
   })
-  @Expose()
   status: boolean;
 
   @ApiProperty({
@@ -115,7 +121,6 @@ export class ContentResponseDTO {
     format: 'date-time',
     example: '2024-11-18T10:00:00.000Z',
   })
-  @Expose()
   createdAt: Date;
 
   @ApiProperty({
@@ -125,11 +130,9 @@ export class ContentResponseDTO {
     format: 'date-time',
     example: '2024-11-18T10:00:00.000Z',
   })
-  @Expose()
   updatedAt: Date;
 
   constructor(partial: Partial<ContentResponseDTO>) {
     Object.assign(this, partial);
   }
 }
-

@@ -6,7 +6,7 @@ import {
   IsOptional,
   MaxLength,
 } from 'class-validator';
-import { ContentCategory } from '../entities/content.entity';
+import { ContentCategory } from '../enums/content-category.enum';
 
 export class UpdateContentDTO {
   @ApiPropertyOptional({
@@ -75,4 +75,3 @@ export class UpdateContentDTO {
   @MaxLength(100)
   author?: string;
 }
-
