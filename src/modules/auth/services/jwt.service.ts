@@ -24,18 +24,15 @@ export class JwtTokenService {
       type: 'access',
     };
 
-    const secret = this.envService.get('JWT_SECRET');
+    const secret = this.envService.get('JWT_SECRET') as string;
     const expiresIn = this.envService.get(
       'JWT_ACCESS_TOKEN_EXPIRATION',
-    ) as any;
+    ) as string;
 
-    return this.jwtService.sign(
-      payload as any,
-      {
-        secret,
-        expiresIn,
-      } as any,
-    );
+    return this.jwtService.sign(payload, {
+      secret,
+      expiresIn,
+    });
   }
 
   generateRefreshToken(userId: string, email: string): string {
@@ -45,23 +42,21 @@ export class JwtTokenService {
       type: 'refresh',
     };
 
-    const secret = this.envService.get('JWT_SECRET');
+    const secret = this.envService.get('JWT_SECRET') as string;
     const expiresIn = this.envService.get(
       'JWT_REFRESH_TOKEN_EXPIRATION',
-    ) as any;
+    ) as string;
 
-    return this.jwtService.sign(
-      payload as any,
-      {
-        secret,
-        expiresIn,
-      } as any,
-    );
+    return this.jwtService.sign(payload, {
+      secret,
+      expiresIn,
+    });
   }
 
   async verifyToken(token: string): Promise<JwtPayload> {
+    const secret = this.envService.get('JWT_SECRET') as string;
     return this.jwtService.verifyAsync<JwtPayload>(token, {
-      secret: this.envService.get('JWT_SECRET'),
+      secret,
     });
   }
 
@@ -79,4 +74,3 @@ export class JwtTokenService {
     return value * (multipliers[unit] || 0);
   }
 }
-

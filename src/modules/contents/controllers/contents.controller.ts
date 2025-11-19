@@ -2,7 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  Put,
+  Patch,
   Delete,
   Body,
   Param,
@@ -97,9 +97,9 @@ export class ContentsController {
     return this.findContentService.execute(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update content by ID' })
+  @ApiOperation({ summary: 'Update content by ID (partial)' })
   @ApiParam({
     name: 'id',
     description: 'Content UUID',
@@ -144,4 +144,3 @@ export class ContentsController {
     return this.deleteContentService.execute(id, user.id);
   }
 }
-

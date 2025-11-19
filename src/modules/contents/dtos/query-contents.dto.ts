@@ -7,22 +7,15 @@ import {
   Max,
   IsString,
   IsEnum,
-  IsNumber,
   MinLength,
 } from 'class-validator';
-import { ContentCategory } from '../entities/content.entity';
+import { SortOrder } from '@/common/enums';
+import { ContentCategory } from '../enums/content-category.enum';
 
 export enum ContentSortBy {
   CREATED_AT = 'createdAt',
   UPDATED_AT = 'updatedAt',
   TITLE = 'title',
-  AVERAGE_RATING = 'averageRating',
-  RATING_COUNT = 'ratingCount',
-}
-
-export enum SortOrder {
-  ASC = 'ASC',
-  DESC = 'DESC',
 }
 
 export class QueryContentsDTO {
@@ -78,21 +71,6 @@ export class QueryContentsDTO {
   category?: ContentCategory;
 
   @ApiPropertyOptional({
-    title: 'minRating',
-    description: 'Minimum average rating',
-    type: Number,
-    minimum: 0,
-    maximum: 5,
-    example: 4.0,
-  })
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  minRating?: number;
-
-  @ApiPropertyOptional({
     title: 'createdBy',
     description: 'Filter by creator user ID',
     type: String,
@@ -122,4 +100,3 @@ export class QueryContentsDTO {
   @IsEnum(SortOrder)
   order?: SortOrder = SortOrder.DESC;
 }
-

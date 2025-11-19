@@ -14,8 +14,6 @@ export class CreateContentService {
     const content = await this.contentsRepository.create({
       ...dto,
       createdBy: userId,
-      ratingCount: 0,
-      averageRating: 0,
       status: true,
     });
 

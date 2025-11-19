@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '@/modules/users/entities/user.entity';
-import { Content } from './content.entity';
+import { Content } from '@/modules/contents/entities/content.entity';
 
 @Entity('ratings')
 @Index(['userId', 'contentId'], { unique: true })
@@ -42,3 +42,4 @@ export class Rating {
   @UpdateDateColumn()
   updatedAt: Date;
 }
+

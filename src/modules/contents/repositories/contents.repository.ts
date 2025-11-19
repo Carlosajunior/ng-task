@@ -12,30 +12,29 @@ export class ContentsRepository {
   ) {}
 
   async create(contentData: Partial<Content>): Promise<Content> {
-    const content = this.repository.create(contentData);
-    return this.repository.save(content);
+    const content = await this.repository.create(contentData);
+    return await this.repository.save(content);
   }
 
   async findById(contentId: string): Promise<Content | null> {
-    return this.repository.findOne({ where: { id: contentId } });
+    return await this.repository.findOne({
+      where: { id: contentId },
+      relations: ['ratings'],
+    });
   }
 
   async findAll(queryDto: QueryContentsDTO): Promise<[Content[], number]> {
-    const { page, limit, search, type, minRating, createdBy, sortBy, order } =
+    const { page, limit, search, category, createdBy, sortBy, order } =
       queryDto;
 
     const skip = (page - 1) * limit;
 
-    const queryBuilder = this.repository.createQueryBuilder('content');
+    const queryBuilder = await this.repository
+      .createQueryBuilder('content')
+      .leftJoinAndSelect('content.ratings', 'ratings');
 
-    if (type) {
-      queryBuilder.andWhere('content.type = :type', { type });
-    }
-
-    if (minRating !== undefined) {
-      queryBuilder.andWhere('content.averageRating >= :minRating', {
-        minRating,
-      });
+    if (category) {
+      queryBuilder.andWhere('content.category = :category', { category });
     }
 
     if (createdBy) {
@@ -53,12 +52,12 @@ export class ContentsRepository {
 
     queryBuilder.orderBy(`content.${sortBy}`, order).skip(skip).take(limit);
 
-    return queryBuilder.getManyAndCount();
+    return await queryBuilder.getManyAndCount();
   }
 
   async update(contentId: string, data: Partial<Content>): Promise<Content> {
     await this.repository.update(contentId, data);
-    return this.findById(contentId);
+    return await this.findById(contentId);
   }
 
   async delete(contentId: string): Promise<void> {
@@ -70,4 +69,3 @@ export class ContentsRepository {
     return count > 0;
   }
 }
-
