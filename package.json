@@ -79,34 +79,34 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "./",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.service.ts",
-      "**/*.controller.ts",
-      "**/*.repository.ts",
-      "**/*.strategy.ts",
-      "**/*.guard.ts",
-      "!**/*.spec.ts",
-      "!**/*.module.ts",
-      "!**/*.dto.ts",
-      "!**/*.entity.ts",
-      "!**/*.interface.ts",
-      "!**/*.enum.ts",
-      "!**/index.ts",
-      "!**/main.ts",
-      "!**/seed.ts",
-      "!**/datasource.ts",
-      "!**/migrations/**",
-      "!**/seeds/**"
+      "./src/**/*.service.ts",
+      "./src/**/*.controller.ts",
+      "./src/**/*.repository.ts",
+      "./src/**/*.strategy.ts",
+      "./src/**/*.guard.ts",
+      "!./src/**/*.spec.ts",
+      "!./src/**/*.module.ts",
+      "!./src/**/*.dto.ts",
+      "!./src/**/*.entity.ts",
+      "!./src/**/*.interface.ts",
+      "!./src/**/*.enum.ts",
+      "!./src/**/index.ts",
+      "!./src/**/main.ts",
+      "!./src/**/seed.ts",
+      "!./src/**/datasource.ts",
+      "!./src/**/migrations/**",
+      "!./src/**/seeds/**"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/$1"
+      "^@/(.*)$": "<rootDir>/src/$1"
     }
   }
 }
